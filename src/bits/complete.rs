@@ -13,7 +13,7 @@ use crate::traits::{Input, ToUsize};
 /// # use nom::bits::complete::take;
 /// # use nom::IResult;
 /// # use nom::error::{Error, ErrorKind};
-/// // Input is a tuple of (input: I, bit_offset: usize)
+/// // Input is a tuple of (input: I, bit_offset: usize)e
 /// fn parser(input: (&[u8], usize), count: usize)-> IResult<(&[u8], usize), u8> {
 ///  take(count)(input)
 /// }
@@ -43,13 +43,13 @@ where
     if count == 0 {
       Ok(((input, bit_offset), 0u8.into()))
     } else {
-      let cnt = (count + bit_offset).div(8);
       if input.input_len() * 8 < count + bit_offset {
         Err(Err::Error(E::from_error_kind(
           (input, bit_offset),
           ErrorKind::Eof,
         )))
       } else {
+        let cnt = (count + bit_offset).div(8);
         let mut acc: O = 0_u8.into();
         let mut offset: usize = bit_offset;
         let mut remaining: usize = count;
